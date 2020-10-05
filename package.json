@@ -1,5 +1,5 @@
 {
-  "name": "google-home-notifier",
+  "name": "@nzws/google-home-notifier",
   "version": "1.2.0",
   "description": "",
   "main": "google-home-notifier.js",
@@ -14,11 +14,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.15.2",
     "castv2-client": "^1.1.2",
+    "google-tts-api": "0.0.4"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "google-tts-api": "0.0.2",
-    "mdns": "^2.3.3",
-    "ngrok": "^2.2.4"
+    "ngrok": "^3.3.0"
   }
 }

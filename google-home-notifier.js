@@ -1,15 +1,7 @@
 var Client = require('castv2-client').Client;
-var DefaultMediaReceiver = require('castv2-client').DefaultMediaReceiver;
-var mdns = require('mdns');
-var browser = mdns.createBrowser(mdns.tcp('googlecast'));
+var DefaultMediaReceiver = require("castv2-client").DefaultMediaReceiver;
 var deviceAddress;
 var language;
-
-var device = function(name, lang = 'en') {
-    device = name;
-    language = lang;
-    return this;
-};
 
 var ip = function(ip, lang = 'en') {
   deviceAddress = ip;
@@ -24,44 +16,16 @@ var accent = function(accent) {
   return this;
 }
 
-var notify = function(message, callback) {
-  if (!deviceAddress){
-    browser.start();
-    browser.on('serviceUp', function(service) {
-      console.log('Device "%s" at %s:%d', service.name, service.addresses[0], service.port);
-      if (service.name.includes(device.replace(' ', '-'))){
-        deviceAddress = service.addresses[0];
-        getSpeechUrl(message, deviceAddress, function(res) {
-          callback(res);
-        });
-      }
-      browser.stop();
-    });
-  }else {
-    getSpeechUrl(message, deviceAddress, function(res) {
-      callback(res);
-    });
-  }
+var notify = function (message, callback) {
+  getSpeechUrl(message, deviceAddress, function  (res) {
+    callback(res);
+  });
 };
 
 var play = function(mp3_url, callback) {
-  if (!deviceAddress){
-    browser.start();
-    browser.on('serviceUp', function(service) {
-      console.log('Device "%s" at %s:%d', service.name, service.addresses[0], service.port);
-      if (service.name.includes(device.replace(' ', '-'))){
-        deviceAddress = service.addresses[0];
-        getPlayUrl(mp3_url, deviceAddress, function(res) {
-          callback(res);
-        });
-      }
-      browser.stop();
-    });
-  }else {
-    getPlayUrl(mp3_url, deviceAddress, function(res) {
-      callback(res);
-    });
-  }
+  getPlayUrl(mp3_url, deviceAddress, function(res) {
+    callback(res);
+  });
 };
 
 var getSpeechUrl = function(text, host, callback) {
